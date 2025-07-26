@@ -5,6 +5,8 @@ import (
 	"testing"
 )
 
+// 1717.删除子字符串的最大得分（中等）
+// 删除字符串ab，ba，返回最大得分
 func MaximumGain(s string, x int, y int) (ans int) {
 	cutNum := []string{"ba", "ab"}
 	p := map[string]int{"ba": y, "ab": x}
