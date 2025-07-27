@@ -39,7 +39,7 @@ func maximumSum2(arr []int) (ans int) {
 	dp1, dp2 := arr[0], 0
 	ans = arr[0]
 	for i := 1; i < arrLen; i++ {
-		//如果之前舍弃的dp2加i下标的数，没有不舍数的dp1(还未加上i的值)大，则要舍弃的是下标1的值
+		//如果之前舍弃的dp2加i下标的数，没有不舍数的dp1(还未加上i的值)大，则要舍弃的是下标i的值
 		dp2 = max(dp2+arr[i], dp1)
 		//如果原值小于0，舍弃之前的累加值。
 		dp1 = max(dp1, 0) + arr[i]
