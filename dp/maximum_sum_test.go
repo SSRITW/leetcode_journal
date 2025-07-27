@@ -31,6 +31,23 @@ func maximumSum(arr []int) (ans int) {
 	return
 }
 
+// 官方思路
+func maximumSum2(arr []int) (ans int) {
+	arrLen := len(arr)
+	//dp1 = 以i为结尾的子数组的总和
+	//dp2 = 以i为结尾，会舍弃一个元素，至于舍弃之前的值还是i值，需要对比判断
+	dp1, dp2 := arr[0], 0
+	ans = arr[0]
+	for i := 1; i < arrLen; i++ {
+		//如果之前舍弃的dp2加i下标的数，没有不舍数的dp1(还未加上i的值)大，则要舍弃的是下标1的值
+		dp2 = max(dp2+arr[i], dp1)
+		//如果原值小于0，舍弃之前的累加值。
+		dp1 = max(dp1, 0) + arr[i]
+		ans = max(ans, dp1, dp2)
+	}
+	return
+}
+
 func TestMaximumSum(t *testing.T) {
 	testCases := []struct {
 		num      []int
@@ -44,7 +61,7 @@ func TestMaximumSum(t *testing.T) {
 	}
 	t.Run("maximumSum", func(t *testing.T) {
 		for _, cases := range testCases {
-			if sum := maximumSum(cases.num); sum != cases.expected {
+			if sum := maximumSum2(cases.num); sum != cases.expected {
 				t.Errorf("num:=%v,expected: %d, got: %d", cases.num, cases.expected, sum)
 			}
 		}
