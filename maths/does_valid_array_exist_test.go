@@ -41,7 +41,7 @@ func TestDoesValidArrayExist(t *testing.T) {
 		{derived: []int{1, 0}, expected: false},
 		{derived: []int{0, 1, 1}, expected: true},
 	}
-	t.Run("maximumSum", func(t *testing.T) {
+	t.Run("doesValidArrayExist", func(t *testing.T) {
 		for _, cases := range testCases {
 			if result := doesValidArrayExist2(cases.derived); result != cases.expected {
 				t.Errorf("num:=%v,expected: %v, got: %v", cases.derived, cases.expected, result)
