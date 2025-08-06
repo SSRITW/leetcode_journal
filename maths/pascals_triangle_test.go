@@ -49,3 +49,13 @@ func TestGenerate(t *testing.T) {
 		}
 	})
 }
+
+// 119. 杨辉三角II（简单） 获取指定行
+func getRow(rowIndex int) []int {
+	ans := make([]int, rowIndex+1)
+	ans[0] = 1
+	for i := 1; i <= rowIndex; i++ {
+
+	}
+	return ans
+}
