@@ -27,9 +27,20 @@ func SwapPairs(head *ListNode) *ListNode {
 	return ans.Next
 }
 
+// 递归
+func SwapPairs2(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	newHead := head.Next
+	head.Next = SwapPairs2(newHead.Next)
+	newHead.Next = head
+	return newHead
+}
+
 func TestSwapPairs(t *testing.T) {
 	head := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4}}}}
-	result := SwapPairs(head)
+	result := SwapPairs2(head)
 	p := result
 	for p != nil {
 		fmt.Println(p.Val)
