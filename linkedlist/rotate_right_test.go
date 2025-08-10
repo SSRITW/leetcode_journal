@@ -5,44 +5,31 @@ import (
 	"testing"
 )
 
-//61. 旋转链表(中等)
-
+// 61. 旋转链表(中等)
 func rotateRight(head *ListNode, k int) *ListNode {
-	if head == nil {
-		return nil
+	if head == nil || head.Next == nil || k == 0 {
+		return head
 	}
 	nLen := 1
-	tail := head
-	for tail.Next != nil {
-		tail = tail.Next
+	temp := head
+	for temp.Next != nil {
+		temp = temp.Next
 		nLen++
 	}
 	k %= nLen
-
-	newHeadIdx := nLen - k
-
-	lessNode := &ListNode{}
-	headNode := &ListNode{}
-	headP := headNode
-	lessP := lessNode
-
-	p := head
-	for i := 0; i < nLen; i++ {
-		next := p.Next
-		p.Next = nil
-		if newHeadIdx > i {
-			lessP.Next = p
-			lessP = lessP.Next
-		} else {
-			headP.Next = p
-			headP = headP.Next
-		}
-		p = next
+	if k == 0 {
+		return head
 	}
-
-	headP.Next = lessNode.Next
-
-	return headNode.Next
+	//头尾相接
+	temp.Next = head
+	newTailIdx := nLen - k
+	for newTailIdx > 0 {
+		temp = temp.Next
+		newTailIdx--
+	}
+	ans := temp.Next
+	temp.Next = nil
+	return ans
 }
 
 func TestRotateRight(t *testing.T) {
