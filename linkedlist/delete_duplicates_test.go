@@ -7,6 +7,7 @@ import (
 
 //82. 删除排序链表中的重复元素 II(中等)
 
+// 预期 in: 1-> 1 -> 2  out: 2
 func deleteDuplicates(head *ListNode) *ListNode {
 	temp := &ListNode{}
 	tempP := temp
@@ -32,6 +33,33 @@ func TestDeleteDuplicates(t *testing.T) {
 	//head := &ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3}}}}}
 	head := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 2}}}
 	result := deleteDuplicates(head)
+	p := result
+	for p != nil {
+		fmt.Println(p.Val)
+		p = p.Next
+	}
+}
+
+//83. 删除排序链表中的重复元素(简单)
+
+// 预期 in: 1-> 1 -> 2  out: 1->2
+func deleteDuplicates83(head *ListNode) *ListNode {
+	p := head
+	for p != nil && p.Next != nil {
+		if p.Val == p.Next.Val {
+			p.Next = p.Next.Next
+			continue
+		}
+		p = p.Next
+	}
+	return head
+}
+
+func TestDeleteDuplicates83(t *testing.T) {
+	//head := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5}}}}}}}
+	//head := &ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3}}}}}
+	head := &ListNode{Val: 1, Next: &ListNode{Val: 1, Next: &ListNode{Val: 1}}}
+	result := deleteDuplicates83(head)
 	p := result
 	for p != nil {
 		fmt.Println(p.Val)
