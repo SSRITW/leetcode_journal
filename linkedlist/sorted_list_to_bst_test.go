@@ -77,6 +77,41 @@ func TestSortedListToBST2(t *testing.T) {
 	fmt.Println(traversal(result))
 }
 
+// ----------------------------------------------------------------------------------------------------------
+
+var global *ListNode
+
+// 参考官方解法，用中序遍历的思路
+func sortedListToBST3(head *ListNode) *TreeNode {
+	l := 0
+	p := head
+	for p != nil {
+		p = p.Next
+		l++
+	}
+	global = head
+	return toBST3(0, l-1)
+}
+
+func toBST3(left, right int) *TreeNode {
+	if left > right {
+		return nil
+	}
+	mid := (left + right + 1) / 2
+	t := &TreeNode{}
+	t.Left = toBST3(left, mid-1)
+	t.Val = global.Val
+	global = global.Next
+	t.Right = toBST3(mid+1, right)
+	return t
+}
+
+func TestSortedListToBST3(t *testing.T) {
+	head := &ListNode{Val: -10, Next: &ListNode{Val: -3, Next: &ListNode{Val: 0, Next: &ListNode{Val: 5, Next: &ListNode{Val: 9}}}}}
+	result := sortedListToBST3(head)
+	fmt.Println(traversal(result))
+}
+
 //----------------------------------------------------------------------------------------------------------
 
 func traversal(tree *TreeNode) (result []int) {
