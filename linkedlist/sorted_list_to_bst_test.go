@@ -12,6 +12,8 @@ type TreeNode struct {
 }
 
 // 109.有序链表转换二叉搜索树（中等）
+
+// 通过转换数组找到中间值
 func sortedListToBST(head *ListNode) *TreeNode {
 	l := make([]int, 0, 10)
 	//先转换数组
@@ -41,6 +43,41 @@ func TestSortedListToBST(t *testing.T) {
 	result := sortedListToBST(head)
 	fmt.Println(traversal(result))
 }
+
+//--------------------------------------------------------------------------
+
+func sortedListToBST2(head *ListNode) *TreeNode {
+	return toBST2(head, nil)
+}
+
+// 快慢针找中间值
+func getMid(left, right *ListNode) *ListNode {
+	fast, slow := left, left
+	for fast != right && fast.Next != right {
+		fast = fast.Next.Next
+		slow = slow.Next
+	}
+	return slow
+}
+
+func toBST2(start, end *ListNode) *TreeNode {
+	if start == end {
+		return nil
+	}
+	mid := getMid(start, end)
+	t := &TreeNode{Val: mid.Val}
+	t.Left = toBST2(start, mid)
+	t.Right = toBST2(mid.Next, end)
+	return t
+}
+
+func TestSortedListToBST2(t *testing.T) {
+	head := &ListNode{Val: -10, Next: &ListNode{Val: -3, Next: &ListNode{Val: 0, Next: &ListNode{Val: 5, Next: &ListNode{Val: 9}}}}}
+	result := sortedListToBST2(head)
+	fmt.Println(traversal(result))
+}
+
+//----------------------------------------------------------------------------------------------------------
 
 func traversal(tree *TreeNode) (result []int) {
 	if tree == nil {
