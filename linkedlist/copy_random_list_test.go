@@ -1,5 +1,7 @@
 package linkedlist
 
+import "testing"
+
 //138. 随机链表的复制(中等)
 
 type RandomNode struct {
@@ -56,4 +58,39 @@ func deepCopy(head *RandomNode) *RandomNode {
 	return newHead
 }
 
-//-----------------------------------------------------------------------
+// -----------------------------------------------------------------------
+// 参考官方解题思路
+func copyRandomList3(head *RandomNode) *RandomNode {
+	if head == nil {
+		return nil
+	}
+	// 直接在老链表里创建新节点
+	for p := head; p != nil; p = p.Next.Next {
+		next := p.Next
+		p.Next = &RandomNode{Val: p.Val, Next: next}
+	}
+	//赋值随机节点变量
+	for p := head; p != nil; p = p.Next.Next {
+		if p.Random != nil {
+			p.Next.Random = p.Random.Next
+		}
+	}
+	//拼接出新的链表
+	newHead := head.Next
+	for p := head; p != nil; p = p.Next {
+		newP := p.Next
+		//将之前拼接的节点移除
+		p.Next = p.Next.Next
+		if newP.Next != nil {
+			newP.Next = newP.Next.Next
+		}
+	}
+	return newHead
+}
+
+func TestCopyRandomList3(t *testing.T) {
+	tree := &RandomNode{Val: 1, Next: &RandomNode{Val: 2}}
+	tree.Random = tree
+	tree.Next.Random = tree
+	copyRandomList3(tree)
+}
